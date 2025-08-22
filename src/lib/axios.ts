@@ -2,15 +2,12 @@ import axios from 'axios';
 
 // Create axios instance with default configuration
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://easyearn-backend-production-01ac.up.railway.app',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3005',
   withCredentials: true, // Important for cross-domain cookie handling
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
-  // Disable any browser cache that might interfere with cookies
-  // This ensures fresh responses and proper cookie handling
-  cache: false,
 });
 
 // Request interceptor for session-based authentication
@@ -30,11 +27,8 @@ api.interceptors.request.use(
     config.withCredentials = true;
     
     // Add extra headers to ensure CORS compatibility
-    config.headers = {
-      ...config.headers,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    };
+    config.headers.set('Accept', 'application/json');
+    config.headers.set('Content-Type', 'application/json');
     
     return config;
   },

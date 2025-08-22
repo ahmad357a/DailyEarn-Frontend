@@ -48,16 +48,21 @@ export function WithdrawPage() {
   const fetchRequirements = async () => {
     try {
       setLoading(true)
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://easyearn-backend-production-01ac.up.railway.app'
-      const response = await axios.get(`${apiUrl}/api/withdrawal-requirements`, {
-        withCredentials: true
-      })
-      
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005'
+      const response = await axios.get(`${apiUrl}/api/withdrawal-requirements`, { withCredentials: true })
       if (response.data.success) {
-        setRequirements(response.data.requirement)
+        setRequirements(response.data.requirements)
       }
     } catch (error) {
-      console.error('Error fetching withdrawal requirements:', error)
+      console.error('Failed to fetch requirements:', error)
+      // Enhanced error handling for requirements
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          alert('❌ Authentication Required\n\n🔐 Please log in to view withdrawal requirements.')
+        } else {
+          alert('❌ Failed to Load Requirements\n\n🔄 Please refresh the page or try again later.')
+        }
+      }
     } finally {
       setLoading(false)
     }
@@ -67,16 +72,21 @@ export function WithdrawPage() {
   const fetchWithdrawals = async () => {
     try {
       setWithdrawalsLoading(true)
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://easyearn-backend-production-01ac.up.railway.app'
-      const response = await axios.get(`${apiUrl}/api/withdrawal-history`, {
-        withCredentials: true
-      })
-      
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005'
+      const response = await axios.get(`${apiUrl}/api/withdrawal-history`, { withCredentials: true })
       if (response.data.success) {
         setWithdrawals(response.data.withdrawals)
       }
     } catch (error) {
-      console.error('Error fetching withdrawal history:', error)
+      console.error('Failed to fetch withdrawals:', error)
+      // Enhanced error handling for withdrawals
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          alert('❌ Authentication Required\n\n🔐 Please log in to view withdrawal history.')
+        } else {
+          alert('❌ Failed to Load Withdrawal History\n\n🔄 Please refresh the page or try again later.')
+        }
+      }
     } finally {
       setWithdrawalsLoading(false)
     }
@@ -89,29 +99,47 @@ export function WithdrawPage() {
 
   const handleWithdraw = async () => {
     if (!requirements?.allRequirementsMet) {
-      alert("You must meet all withdrawal conditions first.")
+      alert(`❌ Withdrawal Requirements Not Met
+
+📋 You must meet all withdrawal conditions first:
+
+✅ Deposit minimum $10
+✅ Refer 1 confirmed friend (every 15 days)  
+✅ Participate in Lucky Draw (every 15 days)
+
+💡 Check the requirements section above to see what you need to complete.`)
       return
     }
 
     if (Number.parseFloat(amount) < minWithdraw) {
-      alert(`Minimum withdrawal is $${minWithdraw}`)
+      alert(`❌ Invalid Withdrawal Amount
+
+💰 Minimum withdrawal amount: $${minWithdraw}
+💡 Please enter an amount of $${minWithdraw} or more.`)
       return
     }
 
     if (Number.parseFloat(amount) > (user?.balance || 0)) {
-      alert("Insufficient balance")
+      alert(`❌ Insufficient Balance
+
+💳 Your current balance: $${user?.balance || 0}
+💰 Requested amount: $${Number.parseFloat(amount).toFixed(2)}
+💡 You need to deposit more funds to complete this withdrawal.`)
       return
     }
 
     if (!walletAddress) {
-      alert("Please enter your wallet address")
+      alert(`❌ Wallet Address Required
+
+🏦 Please enter your Binance wallet address.
+💡 Only USDT (TRC-20) withdrawals are supported.`)
       return
     }
 
     setIsProcessing(true)
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'https://easyearn-backend-production-01ac.up.railway.app'
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3005'
       const response = await axios.post(`${apiUrl}/api/withdrawal-request`, {
         amount: Number.parseFloat(amount),
         walletAddress
@@ -122,13 +150,58 @@ export function WithdrawPage() {
       if (response.data.success) {
         setAmount("")
         setWalletAddress("")
-        alert("Withdrawal request submitted successfully! Processing time: 24-48 hours.")
+        
+        // Enhanced success message with better UX
+        const successMessage = `🎉 Withdrawal Request Submitted Successfully!
+
+💰 Amount: $${Number.parseFloat(amount).toFixed(2)}
+🏦 Wallet: ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}
+⏰ Processing Time: 24-48 hours
+📧 You'll receive email updates on your withdrawal status
+
+Your withdrawal request has been queued and will be processed by our admin team. You can track the status in your withdrawal history below.`
+        
+        alert(successMessage)
+        
         // Refresh requirements and withdrawals after successful withdrawal
         fetchRequirements()
         fetchWithdrawals()
       }
     } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Failed to submit withdrawal request'
+      let errorMessage = 'Failed to submit withdrawal request'
+      
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status
+        const serverError = error.response?.data?.error
+        
+        switch (status) {
+          case 400:
+            if (serverError?.includes('Minimum withdrawal')) {
+              errorMessage = `❌ ${serverError}\n\n💡 Please enter an amount of $1 or more.`
+            } else if (serverError?.includes('Insufficient balance')) {
+              errorMessage = `❌ ${serverError}\n\n💡 Your current balance is $${user?.balance || 0}.\n💰 You need to deposit more funds to meet the minimum withdrawal amount.`
+            } else if (serverError?.includes('withdrawal requirements')) {
+              errorMessage = `❌ ${serverError}\n\n📋 You need to meet all withdrawal requirements:\n• Deposit at least $10\n• Refer 1 friend who deposits $10\n• Participate in Lucky Draw\n\nCheck the requirements section above for details.`
+            } else {
+              errorMessage = `❌ ${serverError || 'Invalid request data'}\n\n💡 Please check your input and try again.`
+            }
+            break
+          case 401:
+            errorMessage = `❌ Authentication Required\n\n🔐 Please log in to submit withdrawal requests.\n💡 If you're already logged in, try refreshing the page.`
+            break
+          case 403:
+            errorMessage = `❌ Access Denied\n\n🚫 You don't have permission to submit withdrawal requests.\n💡 Contact support if you believe this is an error.`
+            break
+          case 500:
+            errorMessage = `❌ Server Error\n\n🔄 Our servers are experiencing issues.\n💡 Please try again in a few minutes or contact support.`
+            break
+          default:
+            errorMessage = `❌ ${serverError || 'An unexpected error occurred'}\n\n💡 Please try again or contact support if the problem persists.`
+        }
+      } else if (error instanceof Error) {
+        errorMessage = `❌ ${error.message}\n\n💡 Please check your connection and try again.`
+      }
+      
       alert(errorMessage)
     } finally {
       setIsProcessing(false)
@@ -310,6 +383,7 @@ export function WithdrawPage() {
                 <div className="text-sm text-yellow-800">
                   <p className="font-medium mb-1">Important Notes:</p>
                   <ul className="list-disc list-inside space-y-1">
+                    <li>Minimum withdrawal: $1</li>
                     <li>Processing time: 24-48 hours</li>
                     <li>Only USDT (TRC-20) withdrawals</li>
                     <li>Double-check your wallet address</li>
