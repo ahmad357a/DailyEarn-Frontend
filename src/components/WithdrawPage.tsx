@@ -20,6 +20,9 @@ interface WithdrawalRequirement {
   allRequirementsMet: boolean
   balanceReset: boolean
   daysLeft: number
+  timerReset?: boolean
+  resetAt?: string
+  previousPeriodId?: string
 }
 
 interface Withdrawal {
@@ -279,6 +282,18 @@ Your withdrawal request has been queued and will be processed by our admin team.
                     : '15-day period ended - requirements reset'
                   }
                 </span>
+              )}
+              {requirements?.timerReset && requirements?.resetAt && (
+                <div className="bg-green-50 border border-green-200 text-green-800 p-3 rounded-lg text-sm mt-3">
+                  <div className="font-medium flex items-center">
+                    🎉 Timer Reset Activated!
+                  </div>
+                  <div className="mt-1 text-xs">
+                    Your 15-day timer was reset on {new Date(requirements.resetAt).toLocaleDateString()} 
+                    because you completed both a referral and lucky draw participation. 
+                    New period ends: {new Date(requirements.periodEnd).toLocaleDateString()}.
+                  </div>
+                </div>
               )}
             </CardDescription>
           </CardHeader>
