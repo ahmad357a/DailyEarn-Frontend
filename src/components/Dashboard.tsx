@@ -48,6 +48,9 @@ export function Dashboard() {
       icon: DollarSign,
       color: "text-green-600",
       redirectPath: "/withdraw",
+      subtitle: user?.additionalBalance && user.additionalBalance > 0 
+        ? `Current: $${user.balance?.toFixed(2) || '0.00'} + Additional: $${user.additionalBalance.toFixed(2)}`
+        : undefined
     },
     {
       title: "Referrals",
@@ -162,6 +165,9 @@ export function Dashboard() {
                     <div>
                       <p className="text-sm font-medium text-gray-600">{stat.title}</p>
                       <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                      {stat.subtitle && (
+                        <p className="text-xs text-gray-500 mt-1">{stat.subtitle}</p>
+                      )}
                     </div>
                     <Icon className={`h-8 w-8 ${stat.color}`} />
                   </div>
