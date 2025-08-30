@@ -87,10 +87,10 @@ const Navbar = () => {
                 <Wallet className="h-4 w-4 text-success" />
                 <div className="text-right">
                   <div className="text-xs text-muted-foreground">Total Balance</div>
-                  <div className="text-sm font-bold text-success">${((user.balance || 0) + (user.additionalBalance || 0)).toFixed(2)}</div>
+                  <div className="text-sm font-bold text-success">${user.totalBalance?.toFixed(2) || '0.00'}</div>
                   {process.env.NODE_ENV === 'development' && (
                     <div className="text-xs text-gray-500">
-                      {user.balance?.toFixed(2) || '0.00'} + {user.additionalBalance?.toFixed(2) || '0.00'}
+                      Current: ${user.balance?.toFixed(2) || '0.00'} + Additional: ${user.additionalBalance?.toFixed(2) || '0.00'}
                     </div>
                   )}
                 </div>

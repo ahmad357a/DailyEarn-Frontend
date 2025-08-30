@@ -44,7 +44,7 @@ export function Dashboard() {
   const stats = [
     {
       title: "Total Balance",
-      value: `$${((user?.balance || 0) + (user?.additionalBalance || 0)).toFixed(2)}`,
+      value: `$${user?.totalBalance?.toFixed(2) || '0.00'}`,
       icon: DollarSign,
       color: "text-green-600",
       redirectPath: "/withdraw",

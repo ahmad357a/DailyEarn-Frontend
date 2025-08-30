@@ -8,6 +8,7 @@ interface User {
   username: string;
   balance?: number;
   additionalBalance?: number;
+  totalBalance?: number;
   referralCode?: string;
   hasDeposited?: boolean;
 }
