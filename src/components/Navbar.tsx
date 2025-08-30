@@ -87,7 +87,7 @@ const Navbar = () => {
                 <Wallet className="h-4 w-4 text-success" />
                 <div className="text-right">
                   <div className="text-xs text-muted-foreground">Balance</div>
-                  <div className="text-sm font-bold text-success">${user.balance?.toFixed(2) || '0.00'}</div>
+                  <div className="text-sm font-bold text-success">${((user.balance || 0) + (user.additionalBalance || 0)).toFixed(2)}</div>
                 </div>
               </div>
             )}

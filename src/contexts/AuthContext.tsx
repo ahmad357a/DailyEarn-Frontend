@@ -7,6 +7,7 @@ interface User {
   email: string;
   username: string;
   balance?: number;
+  additionalBalance?: number;
   referralCode?: string;
   hasDeposited?: boolean;
 }

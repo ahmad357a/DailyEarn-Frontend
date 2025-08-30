@@ -119,10 +119,11 @@ export function WithdrawPage() {
       return
     }
 
-    if (Number.parseFloat(amount) > (user?.balance || 0)) {
+    const totalBalance = (user?.balance || 0) + (user?.additionalBalance || 0);
+    if (Number.parseFloat(amount) > totalBalance) {
       alert(`❌ Insufficient Balance
 
-💳 Your current balance: $${user?.balance || 0}
+💳 Your current balance: $${totalBalance.toFixed(2)}
 💰 Requested amount: $${Number.parseFloat(amount).toFixed(2)}
 💡 You need to deposit more funds to complete this withdrawal.`)
       return
@@ -179,7 +180,8 @@ Your withdrawal request has been queued and will be processed by our admin team.
             if (serverError?.includes('Minimum withdrawal')) {
               errorMessage = `❌ ${serverError}\n\n💡 Please enter an amount of $1 or more.`
             } else if (serverError?.includes('Insufficient balance')) {
-              errorMessage = `❌ ${serverError}\n\n💡 Your current balance is $${user?.balance || 0}.\n💰 You need to deposit more funds to meet the minimum withdrawal amount.`
+              const totalBalance = (user?.balance || 0) + (user?.additionalBalance || 0);
+              errorMessage = `❌ ${serverError}\n\n💡 Your current balance is $${totalBalance.toFixed(2)}.\n💰 You need to deposit more funds to meet the minimum withdrawal amount.`
             } else if (serverError?.includes('withdrawal requirements')) {
               errorMessage = `❌ ${serverError}\n\n📋 You need to meet all withdrawal requirements:\n• Deposit at least $10\n• Refer 1 friend who deposits $10\n• Participate in Lucky Draw\n\nCheck the requirements section above for details.`
             } else {
@@ -305,7 +307,7 @@ Your withdrawal request has been queued and will be processed by our admin team.
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
               <h4 className="font-medium text-blue-900 mb-2">Current Balance</h4>
-              <div className="text-2xl font-bold text-blue-600">${user?.balance || 0}</div>
+              <div className="text-2xl font-bold text-blue-600">${((user?.balance || 0) + (user?.additionalBalance || 0)).toFixed(2)}</div>
               <p className="text-sm text-blue-700 mt-1">Available for withdrawal</p>
             </div>
 
@@ -360,7 +362,7 @@ Your withdrawal request has been queued and will be processed by our admin team.
                 step="0.01"
               />
               <p className="text-sm text-gray-600">
-                Minimum: ${minWithdraw} | Available: ${user?.balance || 0}
+                Minimum: ${minWithdraw} | Available: ${((user?.balance || 0) + (user?.additionalBalance || 0)).toFixed(2)}
               </p>
             </div>
 
