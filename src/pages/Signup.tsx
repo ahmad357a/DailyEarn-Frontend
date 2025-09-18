@@ -162,7 +162,7 @@ const Signup = () => {
               <Gift className="h-8 w-8 text-white" />
             </div>
             <div>
-              <CardTitle className="text-2xl font-bold">Join EasyEarn</CardTitle>
+              <CardTitle className="text-2xl font-bold">Join DailyEarn</CardTitle>
               <CardDescription className="text-muted-foreground">
                 Start winning amazing prizes today!
               </CardDescription>

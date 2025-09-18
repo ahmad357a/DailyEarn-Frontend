@@ -12,7 +12,7 @@ const Footer = () => {
               <div className="bg-gradient-primary p-2 rounded-xl">
                 <Gift className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold">EasyEarn</span>
+              <span className="text-xl font-bold">DailyEarn</span>
             </Link>
             <p className="text-white/80 leading-relaxed mb-6">
               Your trusted platform for daily lucky draws. Win amazing prizes with transparent, fair, and exciting draws.
@@ -63,7 +63,7 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-white/80">easyearnses@gmail.com</span>
+                <span className="text-white/80">dailyearnses@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-primary" />
@@ -95,7 +95,7 @@ const Footer = () => {
         <div className="border-t border-white/20 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white/60 text-sm">
-              © 2024 EasyEarn. All rights reserved. 
+              © 2024 DailyEarn. All rights reserved. 
             </p>
             <div className="flex items-center space-x-4 mt-4 md:mt-0">
               <span className="text-white/60 text-sm">

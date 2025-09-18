@@ -1,7 +1,7 @@
 const https = require('https');
 
 const baseURL = 'https://easyearn-backend-production-01ac.up.railway.app';
-const frontendOrigin = 'https://kingeasyearn.com';
+const frontendOrigin = 'https://kingdailyearn.com';
 
 // Function to make HTTP requests with cookies
 function makeRequest(path, method = 'GET', body = null, cookies = '') {
@@ -142,7 +142,7 @@ async function testLoginFunctionality() {
         console.log('');
         
         console.log('📝 Next Steps to Verify Everything Works:');
-        console.log('   1. Go to: https://kingeasyearn.com/login');
+        console.log('   1. Go to: https://kingdailyearn.com/login');
         console.log('   2. Try logging in with VALID credentials');
         console.log('   3. After successful login, the /me errors should STOP');
         console.log('   4. You should be redirected to the dashboard');

@@ -21,7 +21,7 @@ const faqData = [
   },
   {
     question: "Is this legal and legitimate?",
-    answer: "Yes! EasyEarn is fully licensed and regulated. We operate under strict gambling commission guidelines and maintain transparent records of all draws. All winners are real and verified."
+    answer: "Yes! DailyEarn is fully licensed and regulated. We operate under strict gambling commission guidelines and maintain transparent records of all draws. All winners are real and verified."
   },
   {
     question: "Can I increase my chances of winning?",
@@ -54,7 +54,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to know about EasyEarn Lucky Draw. Still have questions? Contact our support team.
+            Everything you need to know about DailyEarn Lucky Draw. Still have questions? Contact our support team.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ const FAQ = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="mailto:support@easyearn.com"
+              href="mailto:support@dailyearn.com"
               className="inline-flex items-center justify-center px-6 py-3 bg-primary/10 text-primary rounded-xl hover:bg-primary/20 transition-colors"
             >
               Email Support

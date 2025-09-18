@@ -1,4 +1,4 @@
-# EasyEarn Frontend
+# DailyEarn Frontend
 
 ## 🚀 Development Setup
 
@@ -14,7 +14,7 @@
 git clone <YOUR_GIT_URL>
 
 # Step 2: Navigate to the project directory
-cd easyearn-frontend
+cd dailyearn-frontend
 
 # Step 3: Install dependencies
 npm i

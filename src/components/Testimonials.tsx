@@ -7,7 +7,7 @@ const testimonials = [
     prize: "iPhone 14 Pro",
     amount: "$5",
     rating: 5,
-    text: "I couldn't believe it when I got the notification! Won an iPhone 14 Pro with just a $5 entry. EasyEarn is legit!",
+    text: "I couldn't believe it when I got the notification! Won an iPhone 14 Pro with just a $5 entry. DailyEarn is legit!",
     avatar: "SJ"
   },
   {
@@ -39,7 +39,7 @@ const Testimonials = () => {
             Happy Winners
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Join thousands of satisfied winners who trusted EasyEarn with their luck. Your success story could be next!
+            Join thousands of satisfied winners who trusted DailyEarn with their luck. Your success story could be next!
           </p>
         </div>
 

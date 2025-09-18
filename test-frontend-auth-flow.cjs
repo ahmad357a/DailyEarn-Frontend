@@ -1,7 +1,7 @@
 const https = require('https');
 
 const baseURL = 'https://easyearn-backend-production-01ac.up.railway.app';
-const frontendOrigin = 'https://kingeasyearn.com';
+const frontendOrigin = 'https://kingdailyearn.com';
 
 // Function to make HTTP requests with cookies
 function makeRequest(path, method = 'GET', body = null, cookies = '') {
@@ -128,7 +128,7 @@ async function testFrontendAuthFlow() {
         // Step 4: Test frontend configuration
         console.log('4️⃣ Frontend Configuration Status:');
         console.log('   ✅ axios withCredentials: true');
-        console.log('   ✅ CORS Origin configured: https://kingeasyearn.com');
+        console.log('   ✅ CORS Origin configured: https://kingdailyearn.com');
         console.log('   ✅ API URL configured: https://easyearn-backend-production-01ac.up.railway.app');
         console.log('   ✅ Session cookies are being set and sent');
         console.log('   ✅ AuthContext properly handles 401 responses');

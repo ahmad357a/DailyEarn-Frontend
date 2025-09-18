@@ -269,7 +269,7 @@ const Dashboard = () => {
                     <Trophy className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-yellow-700">Welcome to Easy Earn!</h3>
+                    <h3 className="text-xl font-bold text-yellow-700">Welcome to Daily Earn!</h3>
                     <p className="text-muted-foreground">
                       You're now entered into our{' '}
                       <span className="font-semibold text-foreground">Daily Lucky Draw</span>{' '}
