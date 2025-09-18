@@ -87,7 +87,7 @@ const Navbar = () => {
                 <Wallet className="h-4 w-4 text-success" />
                 <div className="text-right">
                   <div className="text-xs text-muted-foreground">Balance</div>
-                  <div className="text-sm font-bold text-success">${user.balance?.toFixed(2) || '0.00'}</div>
+                  <div className="text-sm font-bold text-success">${(user.totalBalance || user.balance || 0).toFixed(2)}</div>
                 </div>
               </div>
             )}
@@ -172,7 +172,7 @@ const Navbar = () => {
                     <Wallet className="h-4 w-4 text-success" />
                     <span className="text-sm font-medium">Balance</span>
                   </div>
-                  <span className="text-lg font-bold text-success">${user.balance?.toFixed(2) || '0.00'}</span>
+                  <span className="text-lg font-bold text-success">${(user.totalBalance || user.balance || 0).toFixed(2)}</span>
                 </div>
               )}
 

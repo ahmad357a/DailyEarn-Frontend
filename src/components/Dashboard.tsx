@@ -44,7 +44,7 @@ export function Dashboard() {
   const stats = [
     {
       title: "Total Balance",
-      value: `$${user?.balance || 0}`,
+      value: `$${user?.totalBalance || user?.balance || 0}`,
       icon: DollarSign,
       color: "text-green-600",
       redirectPath: "/withdraw",
@@ -120,7 +120,7 @@ export function Dashboard() {
                 <div>
                   <h3 className="text-lg font-semibold text-orange-800">Tasks Locked</h3>
                   <p className="text-orange-700">You need to make a minimum $10 deposit to unlock task earning features.</p>
-                  <p className="text-orange-600 text-sm mt-1">Current Balance: ${user?.balance?.toFixed(2) || '0.00'} (First $10 deposit unlocks tasks)</p>
+                  <p className="text-orange-600 text-sm mt-1">Current Balance: ${(user?.totalBalance || user?.balance || 0).toFixed(2)} (First $10 deposit unlocks tasks)</p>
                 </div>
               </div>
               <Link to="/deposit">

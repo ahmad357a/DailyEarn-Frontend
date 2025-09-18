@@ -234,7 +234,7 @@ export function DepositPage() {
                 step="0.01"
               />
               <p className="text-sm text-gray-600">
-                Current Balance: ${user?.balance || 0} | Tasks Unlocked: {user?.hasDeposited ? 'Yes' : 'No'}
+                Current Balance: ${user?.totalBalance || user?.balance || 0} | Tasks Unlocked: {user?.hasDeposited ? 'Yes' : 'No'}
                 {!user?.hasDeposited && (
                   <span className="block text-orange-600 font-medium mt-1">
                     ⚠️ First $10 deposit unlocks tasks but doesn't add to balance
@@ -408,7 +408,7 @@ export function DepositPage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-blue-800">Account Balance:</span>
-                  <span className="text-sm font-medium text-blue-900">${user?.balance?.toFixed(2) || '0.00'}</span>
+                  <span className="text-sm font-medium text-blue-900">${(user?.totalBalance || user?.balance || 0).toFixed(2)}</span>
                 </div>
               </div>
             </div>

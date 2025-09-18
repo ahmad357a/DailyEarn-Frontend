@@ -6,7 +6,9 @@ interface User {
   _id: string;
   email: string;
   username: string;
-  balance?: number;
+  balance?: number; // Base balance (deposits + tasks - withdrawals)
+  totalBalance?: number; // Total balance including additional balance
+  additionalBalance?: number; // Admin-added additional balance
   referralCode?: string;
   hasDeposited?: boolean;
 }

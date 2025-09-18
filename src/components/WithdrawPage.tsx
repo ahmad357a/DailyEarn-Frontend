@@ -98,7 +98,7 @@ export function WithdrawPage() {
       return
     }
 
-    if (Number.parseFloat(amount) > (user?.balance || 0)) {
+    if (Number.parseFloat(amount) > (user?.totalBalance || user?.balance || 0)) {
       alert("Insufficient balance")
       return
     }
@@ -232,7 +232,7 @@ export function WithdrawPage() {
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
               <h4 className="font-medium text-blue-900 mb-2">Current Balance</h4>
-              <div className="text-2xl font-bold text-blue-600">${user?.balance || 0}</div>
+              <div className="text-2xl font-bold text-blue-600">${user?.totalBalance || user?.balance || 0}</div>
               <p className="text-sm text-blue-700 mt-1">Available for withdrawal</p>
             </div>
 
@@ -287,7 +287,7 @@ export function WithdrawPage() {
                 step="0.01"
               />
               <p className="text-sm text-gray-600">
-                Minimum: ${minWithdraw} | Available: ${user?.balance || 0}
+                Minimum: ${minWithdraw} | Available: ${user?.totalBalance || user?.balance || 0}
               </p>
             </div>
 
