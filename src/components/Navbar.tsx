@@ -86,8 +86,13 @@ const Navbar = () => {
               <div className="hidden lg:flex items-center space-x-3 bg-gradient-to-r from-success/5 to-primary/5 px-4 py-2 rounded-xl border border-success/20">
                 <Wallet className="h-4 w-4 text-success" />
                 <div className="text-right">
-                  <div className="text-xs text-muted-foreground">Balance</div>
+                  <div className="text-xs text-muted-foreground">Total Balance</div>
                   <div className="text-sm font-bold text-success">${(user.totalBalance || user.balance || 0).toFixed(2)}</div>
+                  {process.env.NODE_ENV === 'development' && (
+                    <div className="text-xs text-gray-500">
+                      Current: ${user.balance?.toFixed(2) || '0.00'} + Additional: ${user.additionalBalance?.toFixed(2) || '0.00'}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

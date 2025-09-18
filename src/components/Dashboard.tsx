@@ -44,10 +44,13 @@ export function Dashboard() {
   const stats = [
     {
       title: "Total Balance",
-      value: `$${user?.totalBalance || user?.balance || 0}`,
+      value: `$${(user?.totalBalance || user?.balance || 0).toFixed(2)}`,
       icon: DollarSign,
       color: "text-green-600",
       redirectPath: "/withdraw",
+      subtitle: user?.additionalBalance && user.additionalBalance > 0 
+        ? `Current: $${user.balance?.toFixed(2) || '0.00'} + Additional: $${user.additionalBalance.toFixed(2)}`
+        : undefined
     },
     {
       title: "Referrals",
@@ -162,6 +165,9 @@ export function Dashboard() {
                     <div>
                       <p className="text-sm font-medium text-gray-600">{stat.title}</p>
                       <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                      {stat.subtitle && (
+                        <p className="text-xs text-gray-500 mt-1">{stat.subtitle}</p>
+                      )}
                     </div>
                     <Icon className={`h-8 w-8 ${stat.color}`} />
                   </div>
@@ -195,55 +201,6 @@ export function Dashboard() {
           )
         })}
       </div>
-
-      {/* Recent Activity */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Activity className="h-5 w-5 mr-2" />
-            Recent Activity
-          </CardTitle>
-          <CardDescription>Your latest transactions and activities</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {user?.hasDeposited ? (
-              <>
-                <div className="flex items-center justify-between py-3 border-b">
-                  <div className="flex items-center">
-                    <div className="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                      <TrendingUp className="h-4 w-4 text-green-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Task Completed</p>
-                      <p className="text-sm text-gray-600">Social media engagement task</p>
-                    </div>
-                  </div>
-                  <Badge variant="secondary">+$2.50</Badge>
-                </div>
-                
-                <div className="flex items-center justify-between py-3">
-                  <div className="flex items-center">
-                    <div className="h-8 w-8 bg-purple-100 rounded-full flex items-center justify-center mr-3">
-                      <CreditCard className="h-4 w-4 text-purple-600" />
-                    </div>
-                    <div>
-                      <p className="font-medium">Deposit</p>
-                      <p className="text-sm text-gray-600">Binance transfer</p>
-                    </div>
-                  </div>
-                  <Badge variant="outline">+$18.00</Badge>
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <Activity className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>No activity yet. Make your first deposit to get started!</p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   )
 } 
